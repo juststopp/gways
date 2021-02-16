@@ -1,0 +1,42 @@
+{
+  "name": "economybot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "economy.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@awaitjs/express": "^0.7.0",
+    "@rimiti/express-async": "^1.2.0",
+    "axios": "^0.21.0",
+    "better-sqlite3-helper": "^2.0.2",
+    "cookies": "^0.8.0",
+    "dblapi.js": "^2.4.1",
+    "disco-oauth": "^5.0.1",
+    "discord.js": "^12.4.1",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "express-async-await": "^1.1.0",
+    "express-generator": "^4.16.1",
+    "express-promise-router": "^4.0.1",
+    "express-session": "^1.17.1",
+    "fetch": "^1.1.0",
+    "hastebin-gen": "^2.0.5",
+    "moment": "^2.29.1",
+    "moment-duration-format": "^2.3.2",
+    "mongoose": "^5.11.7",
+    "ms": "^2.1.1",
+    "mysql2": "^2.2.5",
+    "parse-ms": "^2.1.0",
+    "passport": "^0.4.1",
+    "passport-discord": "^0.1.4",
+    "pug": "^3.0.0",
+    "quick.db": "^7.0.0-b16",
+    "redis": "^3.0.2",
+    "statcord.js": "^3.1.4"
+  }
+}

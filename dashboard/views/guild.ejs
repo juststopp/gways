@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title><%= guild.name %>   ・   GWays</title>
+    <link rel="icon" type="image/png" href="<%= guild.iconURL()%>" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="/css/style.css" />
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+
+      html {
+        font-family: Poppins;
+      }
+
+      @media screen and (min-width:1500px) {
+        .glass {
+          width: 60%;
+        }
+        .dashboard {
+          width: 60%;
+          flex-direction: column;
+        }
+        .link {
+          flex-direction: column;
+        }
+        .game,
+        .status,
+        .cards,
+        .card,
+        .card-info,
+        .button,
+        .percentage {
+          width: 100%;
+        }
+        .circle1 {
+          top: 5%;
+          right: 15%;
+        }
+        .circle2 {
+          bottom: 5%;
+          left: 10%;
+        }
+      }
+
+      @media screen and (max-width:1500px) {
+        .glass {
+          width: 60%;
+        }
+        .dashboard {
+          width: 60%;
+          flex-direction: column;
+        }
+        .link {
+          flex-direction: column;
+        }
+        .game,
+        .status,
+        .cards,
+        .card,
+        .card-info,
+        .button,
+        .percentage {
+          width: 100%;
+        }
+        .circle1 {
+          top: 5%;
+          right: 15%;
+        }
+        .circle2 {
+          bottom: 5%;
+          left: 10%;
+        }
+      }
+
+      @media screen and (max-width:1450px) {
+        .glass {
+          width: 80%;
+        }
+        .dashboard {
+          width: 80%;
+          flex-direction: column;
+        }
+        .link {
+          flex-direction: column;
+        }
+        .game,
+        .status,
+        .cards,
+        .card,
+        .button,
+        .card-info,
+        .percentage {
+          width: 100%;
+        }
+        .circle1 {
+          top: 5%;
+          right: 15%;
+        }
+        .circle2 {
+          bottom: 5%;
+          left: 10%;
+        }
+      }
+      
+      @media screen and (max-width:1100px) {
+        .user {
+          width: 100%;
+          flex: auto;
+          flex-direction: column;
+          padding-top: 50px;
+        }
+        .glass, 
+        .dashboard,
+        .game,
+        .status,
+        .cards,
+        .card,
+        .card-info,
+        .percentage,
+        .link,
+        .button,
+        .circle1,
+        .circle2 { 
+            width: 100%;
+            flex: auto;
+            flex-direction: column;
+        }
+        h2 {
+          text-align: center;
+        }
+      }
+
+      .dashText {
+        color: #FFFFFF;
+      }
+
+        .button {
+            background: linear-gradient(to right top, #65dfc9, #6cdbeb);
+            transition: 1s;
+            padding:6px 24px;
+            border-radius: 6px;
+            margin-top: 10px;
+            width: 250px;
+        }
+
+        .button:hover {
+            background: none;
+        }
+
+        .button:hover h3 {
+            color: #2f3136;
+        }
+
+        .align-items {
+          vertical-align: middle;
+        }
+        .aLink {
+          color: #658ec6;
+          text-decoration: none;
+        }
+
+        a {
+          text-decoration: none;
+        }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="glass">
+        <div class="dashboard">
+          <div class="user" style="padding-top: 300px;">
+            <img src="<%= guild.iconURL({format: 'png', dynamic: true}) %>" alt="" style="border-radius: 30px;">
+            <h2><%= guild.name %></h2>
+          </div>
+          <div class="link">
+            <span class="button"><a href="<%= invite %>" target="_blank"><h3 class="dashText align-items">Join this server</h3></a></span>
+            <span class="button"><a href="https://gways-bot.tk/guild/<%= guild.id %>/giveaways"><h3 class="dashText align-items">View giveaways</h3></a></span>
+          </div>
+        </div>
+        <div class="games">
+            <div class="cards">
+              <div class="card">
+                <img src="/images/people.png" alt="" width="125px" height="125px"/>
+                <div class="card-info">
+                  <h2 class="percentage" style="text-align: left; padding-left: 20px;">Users</h2>
+                  <p class="align-items" style="text-align: left; padding-left: 20px;">This server have <b><%= guild.memberCount %></b> members</p>
+                </div>
+              </div>
+              <div class="card">
+                <img src="/images/crown.png" alt="" width="125px" height="125px"/>
+                <div class="card-info">
+                  <h2 class="percentage" style="text-align: left; padding-left: 20px;">Owner</h2>
+                  <p class="align-items" style="text-align: left; padding-left: 20px;">The owner is <b><%= owner %></b></p>
+                </div>
+              </div>
+              <div class="card">
+                <img src="/images/tada.png" alt="" width="125px" height="125px"/>
+                <div class="card-info">
+                  <h2 class="percentage" style="text-align: left; padding-left: 20px;">Giveaways</h2>
+                  <p class="align-items" style="text-align: left; padding-left: 20px;"><b><%= giveaways.length %></b> <a href="https://gways-bot.tk/guild/<%= guild.id %>/giveaways" class="aLink">giveaways <%= giveaways.length > 1 ? "were" : "was" %> launched in this server</a></p>
+                </div>
+              </div>
+            </div>
+          </div>
+      </section>
+    </main>
+    <div class="circle1"></div>
+    <div class="circle2"></div>
+  </body>
+</html>

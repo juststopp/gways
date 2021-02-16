@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>GWays   ・   Giveaway bot</title>
+    <link rel="icon" type="image/png" href="/images/logo.png" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="/css/style.css" />
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+
+      html {
+        font-family: Poppins;
+      }
+
+      @media screen and (min-width:1500px) {
+        .glass {
+          width: 60%;
+        }
+        .dashboard {
+          width: 60%;
+          flex-direction: column;
+        }
+        .link {
+          flex-direction: column;
+        }
+        .game,
+        .status,
+        .cards,
+        .card,
+        .card-info,
+        .percentage {
+          width: 100%;
+        }
+        .circle1 {
+          top: 5%;
+          right: 15%;
+        }
+        .circle2 {
+          bottom: 5%;
+          left: 10%;
+        }
+      }
+
+      @media screen and (max-width:1500px) {
+        .glass {
+          width: 60%;
+        }
+        .dashboard {
+          width: 60%;
+          flex-direction: column;
+        }
+        .link {
+          flex-direction: column;
+        }
+        .game,
+        .status,
+        .cards,
+        .card,
+        .card-info,
+        .percentage {
+          width: 100%;
+        }
+        .circle1 {
+          top: 5%;
+          right: 15%;
+        }
+        .circle2 {
+          bottom: 5%;
+          left: 10%;
+        }
+      }
+
+      @media screen and (max-width:1450px) {
+        .glass {
+          width: 80%;
+        }
+        .dashboard {
+          width: 80%;
+          flex-direction: column;
+        }
+        .link {
+          flex-direction: column;
+        }
+        .game,
+        .status,
+        .cards,
+        .card,
+        .card-info,
+        .percentage {
+          width: 100%;
+        }
+        .circle1 {
+          top: 5%;
+          right: 15%;
+        }
+        .circle2 {
+          bottom: 5%;
+          left: 10%;
+        }
+      }
+      
+      @media screen and (max-width:1100px) {
+        .user {
+          width: 100%;
+          flex: auto;
+          flex-direction: column;
+          padding-top: 50px;
+        }
+        .glass, 
+        .dashboard,
+        .game,
+        .status,
+        .cards,
+        .card,
+        .card-info,
+        .percentage,
+        .link,
+        .circle1,
+        .circle2 { 
+            width: 100%;
+            flex: auto;
+            flex-direction: column;
+        }
+        h2 {
+          text-align: center;
+        }
+      }
+
+      .dashText {
+        color: #FFFFFF;
+      }
+
+        .button {
+            background: linear-gradient(to right top, #65dfc9, #6cdbeb);
+            transition: all 1s ease-out;
+            padding:6px 24px;
+            border-radius: 6px;
+            margin-top: 10px;
+            align-items: flex-start;
+            width: 250px;
+        }
+
+        .button:hover {
+            background: transparent;
+        }
+
+        .button:hover h3 {
+            color: #2f3136;
+        }
+
+        .align-items {
+          vertical-align: middle;
+        }
+        a {
+          text-decoration: none;
+        }
+
+        .text {
+            background: linear-gradient(to right top, #65dfc9, #6cdbeb);
+            color: white;
+            padding:6px 12px;
+            border-radius: 6px;
+            margin-top: 10px;
+            align-items: flex-start;
+            width: auto;
+        }
+        .image {
+            background: linear-gradient(to right top, #65dfc9, #6cdbeb);
+            color: white;
+            padding:6px 6px;
+            border-radius: 12px;
+            margin-top: 10px;
+            align-items: flex-start;
+            width: auto;
+            height: auto;
+        }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="glass">
+        <div class="dashboard">
+          <div class="user" style="padding-top: 175px; padding-bottom: 75px;">
+            <a href="https://gways-bot.tk/guild/<%= guild.id %>"><img src="<%= guildicon %>" alt="" style="border-radius: 30px;"></a>
+            <h2><%= guildname %></h2>
+          </div>
+          <div class="link">
+            <span class="button"><a href="https://top.gg/bot/746404171783340164/invite" target="_blank"><h3 class="dashText align-items"><span class="material-icons align-items">&#xe145;</span> Add the bot</h3></a></span>
+            <span class="button"><a href="https://discord.gg/ATgdsab2k2" target="_blank"><h3 class="dashText align-items"><span class="material-icons align-items" style="font-size: 20px;">&#xe8fd;</span> Support server</h3></a></span>
+            <span class="button"><a href="https://top.gg/bot/746404171783340164/vote" target="_blank"><h3 class="dashText align-items"><span class='fas fa-angle-double-up align-items' style='font-size:20px'></span></span> Vote</h3></a></span>
+          </div>
+        </div>
+        <div class="games">
+          <div class="cards">
+            <div class="card">
+              <span class="image"><img src="/images/giftbox.png" alt="" width="125px" height="125px"/></span>
+              <div class="card-info">
+                <h2 class="percentage" style="text-align: left; padding-left: 20px; padding-top: 30px;">Prize</h2>
+                <p class="align-items" style="text-align: left; padding-left: 20px; padding-top: 10px"><span class="text" style="font-size: 200;"><%= prize %></span></p>
+              </div>
+            </div>
+            <div class="card">
+              <span class="image"><img src="/images/crown.png" alt="" width="125px" height="125px"/></span>
+              <div class="card-info">
+                <h2 class="percentage" style="text-align: left; padding-left: 20px; padding-top: 30px">Host</h2>
+                <p class="align-items" style="text-align: left; padding-left: 20px; padding-top: 10px"><span class="text">This giveaway is hosted by <b><%= giveawayhost %></b></span></p>
+              </div>
+            </div>
+            <div class="card">
+              <span class="image"><img src="/images/hourglass.png" alt="" width="125px" height="125px"/></span>
+              <div class="card-info">
+                <h2 class="percentage" style="text-align: left; padding-left: 20px; padding-top: 30px">Time left</h2>
+                <p class="align-items" style="text-align: left; padding-left: 20px; padding-top: 10px"><span class="text" id="timer"><%= left %></span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <div class="circle1"></div>
+    <div class="circle2"></div>
+  </body>
+  <script>
+    function msToTime(ms){
+      days = Math.floor(ms / 86400000); // 24*60*60*1000
+      daysms = ms % 86400000; // 24*60*60*1000
+      hours = Math.floor(daysms / 3600000); // 60*60*1000
+      hoursms = ms % 3600000; // 60*60*1000
+      minutes = Math.floor(hoursms / 60000); // 60*1000
+      minutesms = ms % 60000; // 60*1000
+      sec = Math.floor(minutesms / 1000);
+      
+      let str = "";
+      if (days) str = str + days + (days > 1 ? " days " : " day ");
+      if (hours) str = str + hours + (hours > 1 ? " hours " : " hour ");
+      if (minutes) str = str + minutes + (minutes > 1 ? " minutes " : " minute ");
+      if (sec) str = str + sec + (sec > 1 ? " seconds " : " second ");
+      
+      return str;
+    }
+
+    const gw = '<%- JSON.stringify(giveaway) %>';
+    setInterval(async () => {
+      let [giveaway] = await db.query(`SELECT * FROM giveaway WHERE id='${gw.id}'`)
+      document.getElementById('timer').innerHTML = msToTime(giveaway[0].duration - (Date.now() - giveaway[0].datenow))
+    }, 1000)
+  </script>
+</html>
