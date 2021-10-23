@@ -31,7 +31,7 @@ class Eval extends Command {
                 .setColor('GREEN')
                 .addField("📥 Entrée:", `\`\`\`js\n${ctx.args.getString("script")}\`\`\``)
                 .addField("📤 Résultat:", `\`\`\`js\n${cleaned}\n\`\`\``)
-            ], ephemeral: true});
+            ]});
         } catch(err) {
             ctx.reply({embeds: [
                 new MessageEmbed()
@@ -39,7 +39,7 @@ class Eval extends Command {
                 .setColor('RED')
                 .addField("📥 Entrée:", `\`\`\`js\n${ctx.args.getString("script")}\`\`\``)
                 .addField("📤 Résultat:", `\`\`\`js\n${err}\n\`\`\``)
-            ], ephemeral: true});
+            ]});
         }
     }
 }
