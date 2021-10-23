@@ -1,0 +1,19 @@
+{
+  "devDependencies": {
+    "typescript": "^4.4.4"
+  },
+  "name": "gways",
+  "version": "0.0.1",
+  "description": "A giveaway bot",
+  "main": "main.ts",
+  "scripts": {
+    "test": "node dist/shard.js",
+    "start": "tsc && node dist/shard.js"
+  },
+  "author": "JustStop__",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^13.2.0",
+    "mysql2": "^2.3.2"
+  }
+}

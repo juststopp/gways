@@ -1,0 +1,9 @@
+{
+    "code": "en",
+    "steps": {
+        "prize": "**What do you wan't the winner(s) to won ?** - `1/3`",
+        "winners": "**How many winners do you wan't the giveaway to have ?** - `2/3`",
+        "duration": "**How long do you wan't the giveaway to be ?** - `3/3`",
+        "footer": "\n\n- *To stop the giveaway creation process, just reply to this message by saying `cancel`.*"
+    }
+}
