@@ -5,7 +5,7 @@ import Faster from "./src/utils/Faster.js";
 import Logger from "./src/utils/Logger";
 import GiveawayManager from "./src/utils/GiveawayManager";
 import * as config from "./config.json";
-import { Pool, createPool } from "mysql2";
+import { connect } from "mongoose";
 
 class Bot extends Client {
     config: any;
@@ -13,12 +13,11 @@ class Bot extends Client {
     events: EventsManager;
     commands: CommandsManager;
     faster: Faster;
-    db: Pool;
     giveaways: GiveawayManager;
 
     constructor() {
         super({
-            intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGE_REACTIONS],
+            intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGE_REACTIONS, Intents.FLAGS.GUILD_MESSAGES],
             makeCache: Options.cacheWithLimits({
                 MessageManager: {
                     sweepInterval: 300,
@@ -42,13 +41,13 @@ class Bot extends Client {
         this.events = new EventsManager(this);
         this.faster = new Faster(this);
         this.giveaways = new GiveawayManager(this);
-        this.db = createPool(this.config.mysql);
 
         this.launch();
     }
 
     async launch() {
         await this.events.loadEvents();
+        await connect('mongodb+srv://juststop:devpassword@cluster0.ho9il.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
         this.logger.success(`[Events] ${this.events?.events.size} évènements ont été chargés.`)
 
         try { 

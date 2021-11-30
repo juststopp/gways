@@ -1,6 +1,7 @@
 import type Client from "../../main";
-import { CommandInteraction, GuildChannel, Permissions, BitField, ThreadChannel } from "discord.js";
+import { CommandInteraction, GuildChannel, Permissions, BitField, ThreadChannel, Guild } from "discord.js";
 import Context from "../utils/Context";
+import { GuildModel, IGuild } from '../utils/schemas/Guild.model';
 
 class CommandHandler {
     client: typeof Client;
@@ -12,7 +13,7 @@ class CommandHandler {
     async handle(interaction: CommandInteraction) {
         if(interaction.user.bot || !interaction.inGuild()) return;
         
-        const guild = interaction.guild;
+        const guild: Guild = interaction.guild;
 
         if(!(interaction.channel instanceof GuildChannel) && !(interaction.channel instanceof ThreadChannel)) throw new Error("Salon introuvable.");
         const channelBotPerms = new Permissions(interaction.channel?.permissionsFor(guild.me));
@@ -26,8 +27,8 @@ class CommandHandler {
         if(command.botPerms.length > 0 && !command.botPerms.every(p => guild.me.permissions.has(p) && channelBotPerms.has(p))) return interaction.reply({content: `:x: **|** I must have the following permissions to work properly.\n- \`${new Permissions(command.botPerms).toArray().join("`,\n- `")}\``, ephemeral: true});
         if(command.disabled && !this.client.config.bot.owners.includes(interaction.user.id)) return interaction.reply({content: ":x: **|** This command has temporarly been disabled.", ephemeral: true});
 
-        const guildDatas = await this.client.db.promise().query(`SELECT * FROM guild WHERE id='${guild.id}'`);
-        const ctx = new Context(this.client, interaction, guildDatas[0]);
+        const guildDatas: IGuild = await GuildModel.findOne({ id: guild.id }).then(g => g || GuildModel.create({ id: guild.id }));
+        const ctx = new Context(this.client, interaction, guildDatas);
 
         try {
             await command.run(ctx);

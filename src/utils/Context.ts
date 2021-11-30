@@ -16,7 +16,7 @@ class Context {
         this.client = client;
         this.args = interaction.options;
         this.datas = guildDatas;
-        this.lang = this.client.faster.lang(this.datas[0]?.lang);
+        this.lang = this.client.faster.lang(guildDatas.lang);
     }
 
     get shards(): ShardClientUtil {
