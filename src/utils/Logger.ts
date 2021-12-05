@@ -33,7 +33,7 @@ class Logger {
     private _init() {
         for(const [type, color] of Object.entries(this._types) as [Loggers, string][]){
             this[type] = (...content: any): void => {
-                this._originalConsole.log("\x1b[40m", this._getDate(), color, `[${this.title}]`, ...content, "\x1b[0m");
+                this._originalConsole.log(this._getDate(), color, `[${this.title}]`, ...content, "\x1b[0m");
             };
             console[type] = (...content: any): void => {
                 this[type](...content);

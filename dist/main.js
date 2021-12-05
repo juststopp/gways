@@ -36,13 +36,15 @@ const EventsManager_js_1 = __importDefault(require("./src/utils/EventsManager.js
 const Faster_js_1 = __importDefault(require("./src/utils/Faster.js"));
 const Logger_1 = __importDefault(require("./src/utils/Logger"));
 const GiveawayManager_1 = __importDefault(require("./src/utils/GiveawayManager"));
+const TimersManager_1 = __importDefault(require("./src/utils/TimersManager"));
 const config = __importStar(require("./config.json"));
-const mysql2_1 = require("mysql2");
+const mongoose_1 = require("mongoose");
 class Bot extends discord_js_1.Client {
     constructor() {
         var _a, _b, _c;
         super({
-            intents: [discord_js_1.Intents.FLAGS.GUILDS, discord_js_1.Intents.FLAGS.GUILD_MESSAGE_REACTIONS],
+            intents: [discord_js_1.Intents.FLAGS.GUILDS, discord_js_1.Intents.FLAGS.GUILD_MESSAGE_REACTIONS, discord_js_1.Intents.FLAGS.GUILD_MESSAGES, discord_js_1.Intents.FLAGS.GUILD_MEMBERS],
+            partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
             makeCache: discord_js_1.Options.cacheWithLimits({
                 MessageManager: {
                     sweepInterval: 300,
@@ -65,17 +67,19 @@ class Bot extends discord_js_1.Client {
         this.events = new EventsManager_js_1.default(this);
         this.faster = new Faster_js_1.default(this);
         this.giveaways = new GiveawayManager_1.default(this);
-        this.db = (0, mysql2_1.createPool)(this.config.mysql);
+        this.timers = new TimersManager_1.default(this);
         this.launch();
     }
     launch() {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             yield this.events.loadEvents();
+            yield (0, mongoose_1.connect)('mongodb+srv://juststop:devpassword@cluster0.ho9il.mongodb.net/myFirstDatabase?retryWrites=true&w=majority');
             this.logger.success(`[Events] ${(_a = this.events) === null || _a === void 0 ? void 0 : _a.events.size} évènements ont été chargés.`);
             try {
                 this.login(this.config.bot.token);
                 this.logger.success(`Le WebSocket a correctement été établie avec Discord.`);
+                this.timers.ending();
             }
             catch (err) {
                 this.logger.error(`Une erreur est apparue lors du lancement du bot: ${err}`);

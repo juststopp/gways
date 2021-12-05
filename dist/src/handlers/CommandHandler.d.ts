@@ -1,8 +1,8 @@
 import type Client from "../../main";
-import { CommandInteraction } from "discord.js";
+import { CommandInteraction, ContextMenuInteraction } from "discord.js";
 declare class CommandHandler {
     client: typeof Client;
     constructor(client: typeof Client);
-    handle(interaction: CommandInteraction): Promise<void>;
+    handle(interaction: CommandInteraction | ContextMenuInteraction): Promise<void>;
 }
 export default CommandHandler;

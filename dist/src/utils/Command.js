@@ -4,6 +4,7 @@ class Command {
     constructor(info) {
         this.name = info.name;
         this.category = info.category;
+        this.type = info.type;
         this.description = info.description;
         this.options = info.options || [];
         this.examples = info.examples || [];

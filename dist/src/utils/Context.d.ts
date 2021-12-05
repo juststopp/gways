@@ -1,12 +1,12 @@
-import { CommandInteraction, CommandInteractionOptionResolver, Guild, ShardClientUtil, TextChannel, NewsChannel, ThreadChannel, User, GuildMember, InteractionReplyOptions, MessagePayload, InteractionDeferReplyOptions, WebhookEditMessageOptions } from "discord.js";
+import { CommandInteraction, CommandInteractionOptionResolver, Guild, ShardClientUtil, TextChannel, NewsChannel, ThreadChannel, User, GuildMember, InteractionReplyOptions, MessagePayload, InteractionDeferReplyOptions, WebhookEditMessageOptions, ContextMenuInteraction } from "discord.js";
 import Client from "../../main";
 declare class Context {
-    interaction: CommandInteraction;
+    interaction: CommandInteraction | ContextMenuInteraction;
     client: typeof Client;
     args: CommandInteractionOptionResolver;
     datas: any;
     lang: JSON;
-    constructor(client: typeof Client, interaction: CommandInteraction, guildDatas: any);
+    constructor(client: typeof Client, interaction: CommandInteraction | ContextMenuInteraction, guildDatas: any);
     get shards(): ShardClientUtil;
     get guild(): Guild;
     get channel(): TextChannel | NewsChannel | ThreadChannel;

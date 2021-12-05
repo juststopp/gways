@@ -17,7 +17,7 @@ class Logger {
     _init() {
         for (const [type, color] of Object.entries(this._types)) {
             this[type] = (...content) => {
-                this._originalConsole.log("\x1b[40m", this._getDate(), color, `[${this.title}]`, ...content, "\x1b[0m");
+                this._originalConsole.log(this._getDate(), color, `[${this.title}]`, ...content, "\x1b[0m");
             };
             console[type] = (...content) => {
                 this[type](...content);

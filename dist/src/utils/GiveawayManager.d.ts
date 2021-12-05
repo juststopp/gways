@@ -1,10 +1,12 @@
-import { Snowflake } from 'discord-api-types';
 import type Client from '../../main';
+import { MessageEmbed, Guild, GuildMember } from 'discord.js';
+import { IGiveaway } from './schemas/Giveaway.model';
+import { IEntry } from './schemas/Entries.model';
 declare class GiveawayManager {
     private _client;
-    private _steps;
     constructor(client: typeof Client);
-    giveaway(_id: Snowflake): Promise<import("mysql2/typings/mysql/lib/protocol/packets/RowDataPacket")[] | import("mysql2/typings/mysql/lib/protocol/packets/RowDataPacket")[][] | import("mysql2/typings/mysql/lib/protocol/packets/OkPacket") | import("mysql2/typings/mysql/lib/protocol/packets/OkPacket")[] | import("mysql2/typings/mysql/lib/protocol/packets/ResultSetHeader")>;
-    get steps(): Array<string>;
+    buildEmbed(giveaway: IGiveaway, allGuilds: Map<string, Guild> | string): MessageEmbed;
+    pickWinner(giveaway: IGiveaway, entries: IEntry[], guild: Guild): Promise<Array<GuildMember> | undefined>;
+    buildEndEmbed(giveaway: IGiveaway, winners: Array<GuildMember> | undefined): Promise<MessageEmbed>;
 }
 export default GiveawayManager;

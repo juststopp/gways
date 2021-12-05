@@ -62,20 +62,30 @@ class CommandManager {
                     }
                 }
             }
-            yield this._slashCommands.set(this._commands.filter(cmd => cmd.testCmd).map((cmd) => {
-                return {
-                    name: cmd.name,
-                    description: cmd.description,
-                    options: cmd.options
-                };
+            yield this._slashCommands.set(this._commands.map((cmd) => {
+                if (cmd.type !== "CHAT_INPUT")
+                    return {
+                        name: cmd.name,
+                        type: cmd.type
+                    };
+                else
+                    return {
+                        name: cmd.name,
+                        description: cmd.description,
+                        options: cmd.options
+                    };
             }), this._client.config.discord.testGuild);
-            yield this._slashCommands.set(this._commands.filter(cmd => !cmd.testCmd).map(cmd => {
-                return {
+            /*await this._slashCommands.set(this._commands.filter(cmd => !cmd.testCmd).map(cmd => {
+                if(cmd.type !== "CHAT_INPUT") return {
+                    name: cmd.name,
+                    type: cmd.type
+                }
+                else return {
                     name: cmd.name,
                     description: cmd.description,
                     options: cmd.options
-                };
-            }));
+                }
+            }));*/
         });
     }
 }

@@ -4,6 +4,7 @@ import EventsManager from "./src/utils/EventsManager.js";
 import Faster from "./src/utils/Faster.js";
 import Logger from "./src/utils/Logger";
 import GiveawayManager from "./src/utils/GiveawayManager";
+import TimersManager from "./src/utils/TimersManager";
 declare class Bot extends Client {
     config: any;
     logger: Logger;
@@ -11,6 +12,7 @@ declare class Bot extends Client {
     commands: CommandsManager;
     faster: Faster;
     giveaways: GiveawayManager;
+    timers: TimersManager;
     constructor();
     launch(): Promise<never>;
 }

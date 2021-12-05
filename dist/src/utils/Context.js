@@ -3,12 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 class Context {
     constructor(client, interaction, guildDatas) {
-        var _a;
         this.interaction = interaction;
         this.client = client;
         this.args = interaction.options;
         this.datas = guildDatas;
-        this.lang = this.client.faster.lang((_a = this.datas[0]) === null || _a === void 0 ? void 0 : _a.lang);
+        this.lang = this.client.faster.lang(guildDatas.lang);
     }
     get shards() {
         var _a;

@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const Context_1 = __importDefault(require("../utils/Context"));
+const Guild_model_1 = require("../utils/schemas/Guild.model");
 class CommandHandler {
     constructor(client) {
         this.client = client;
@@ -40,8 +41,8 @@ class CommandHandler {
                 return interaction.reply({ content: `:x: **|** I must have the following permissions to work properly.\n- \`${new discord_js_1.Permissions(command.botPerms).toArray().join("`,\n- `")}\``, ephemeral: true });
             if (command.disabled && !this.client.config.bot.owners.includes(interaction.user.id))
                 return interaction.reply({ content: ":x: **|** This command has temporarly been disabled.", ephemeral: true });
-            const guildDatas = yield this.client.db.promise().query(`SELECT * FROM guild WHERE id='${guild.id}'`);
-            const ctx = new Context_1.default(this.client, interaction, guildDatas[0]);
+            const guildDatas = yield Guild_model_1.GuildModel.findOne({ id: guild.id }).then(g => g || Guild_model_1.GuildModel.create({ id: guild.id }));
+            const ctx = new Context_1.default(this.client, interaction, guildDatas);
             try {
                 yield command.run(ctx);
                 this.client.logger.info(`La commande ${command.name} a été effectuée par ${ctx.member.user.username} sur le serveur ${ctx.guild.name}`);

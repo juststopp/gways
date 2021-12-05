@@ -1,5 +1,5 @@
 import type Client from "../../main";
-import { CommandInteraction, GuildChannel, Permissions, BitField, ThreadChannel, Guild } from "discord.js";
+import { CommandInteraction, GuildChannel, Permissions, ThreadChannel, Guild, ContextMenuInteraction } from "discord.js";
 import Context from "../utils/Context";
 import { GuildModel, IGuild } from '../utils/schemas/Guild.model';
 
@@ -10,7 +10,7 @@ class CommandHandler {
         this.client = client;
     }
 
-    async handle(interaction: CommandInteraction) {
+    async handle(interaction: CommandInteraction | ContextMenuInteraction) {
         if(interaction.user.bot || !interaction.inGuild()) return;
         
         const guild: Guild = interaction.guild;

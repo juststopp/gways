@@ -22,7 +22,7 @@ class InteractionCreate extends DiscordEvent_1.default {
     }
     run(interaction) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (interaction.isCommand())
+            if (interaction.isCommand() || interaction.isContextMenu())
                 yield this.commands.handle(interaction);
         });
     }

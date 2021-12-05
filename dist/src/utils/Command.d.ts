@@ -1,9 +1,10 @@
-import type { ApplicationCommandOptionData } from "discord.js";
+import type { ApplicationCommandOptionData, ApplicationCommandType } from "discord.js";
 import type Context from "./Context";
 interface CommandInfo {
     name: string;
     description: string;
     category: string;
+    type: ApplicationCommandType;
     options?: ApplicationCommandOptionData[];
     aliases?: string[];
     examples?: string[];
@@ -18,6 +19,7 @@ export default abstract class Command {
     name: string;
     description: string;
     category: string;
+    type: ApplicationCommandType;
     options: ApplicationCommandOptionData[];
     examples: string[];
     aliases: string[];

@@ -12,7 +12,7 @@ class InteractionCreate extends DiscordEvent {
     }
 
     async run(interaction: Interaction) {
-        if(interaction.isCommand()) await this.commands.handle(interaction);
+        if(interaction.isCommand() || interaction.isContextMenu()) await this.commands.handle(interaction);
     }
 }
 
