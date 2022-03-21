@@ -10,8 +10,8 @@ class Ready extends DiscordEvent {
     }
 
     async run() {
-        this._client.user.setStatus("idle");
         this._client.commands = new CommandsManager(this._client);
+        this._client.user.setActivity(`https://juststop.dev | https://gways.juststop.dev`)
 
         this._client.commands.loadCommands().then(() => {
             this._client.logger.success(`[Commandes] ${this._client.commands?.commands.size} commandes ont été chargées.`);

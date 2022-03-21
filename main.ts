@@ -16,6 +16,7 @@ class Bot extends Client {
     faster: Faster;
     giveaways: GiveawayManager;
     timers: TimersManager;
+    reactionsCooldown: Array<String>
 
     constructor() {
         super({
@@ -45,13 +46,14 @@ class Bot extends Client {
         this.faster = new Faster(this);
         this.giveaways = new GiveawayManager(this);
         this.timers = new TimersManager(this);
+        this.reactionsCooldown = new Array<string>();
 
         this.launch();
     }
 
     async launch() {
         await this.events.loadEvents();
-        await connect(this.config.mongoURL)
+        await connect('mongodb+srv://juststop:devpassword@cluster0.ho9il.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
         this.logger.success(`[Events] ${this.events?.events.size} évènements ont été chargés.`);
 
         try { 

@@ -7,6 +7,7 @@ interface CommandInfo {
     category: string,
     type: ApplicationCommandType,
     options?: ApplicationCommandOptionData[],
+    premium?: boolean,
     aliases?: string[],
     examples?: string[],
     userPerms?: bigint[],
@@ -24,6 +25,7 @@ export default abstract class Command {
     type: ApplicationCommandType;
     options: ApplicationCommandOptionData[];
     examples: string[];
+    premium: boolean;
     aliases: string[];
     userPerms: bigint[];
     botPerms: bigint[];
@@ -39,6 +41,7 @@ export default abstract class Command {
         this.description = info.description;
         this.options = info.options || [];
         this.examples = info.examples || [];
+        this.premium = info.premium || false;
         this.aliases = info.aliases || [];
 
         this.userPerms = info.userPerms || [];

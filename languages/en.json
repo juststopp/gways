@@ -1,9 +1,240 @@
 {
     "code": "en",
-    "steps": {
-        "prize": "**What do you wan't the winner(s) to won ?** - `1/3`",
-        "winners": "**How many winners do you wan't the giveaway to have ?** - `2/3`",
-        "duration": "**How long do you wan't the giveaway to be ?** - `3/3`",
-        "footer": "\n\n- *To stop the giveaway creation process, just reply to this message by saying `cancel`.*"
+    "help": ":gift: **Giveaways**\n・`start` - Create a new giveaway\n・`end` - End a giveaway\n・`reroll` - Reroll a giveaway\n・`edit` - Edit a giveaway\n・`restart` - Restart a giveaway on the same message with a new duration`⭐`\n\n🔨 **Utils**\n・`stats` - Get your stats\n・`botinfo` - Shows informations about the bot\n・`help` - Show the list of all commands\n\n⚙️ **Configuration**\n・`setup` - Modify the bot configuration on the server\n・`setemoji` - Change the giveaway reaction emoji `⭐`\n・`clearstats` - Clear stats from a member or all members\n\n[Support server](https://discord.gg/qBhyWmWAPn)・[Invite the bot](https://discord.com/api/oauth2/authorize?client_id=900373679937056859&permissions=415538465857&scope=applications.commands%20bot)",
+    "helptitle": "Help menu.",
+    "none": "None",
+    "cmds": {
+        "owneronly": ":x: **|** This command is reserved to my creators.",
+        "userPerms": ":x: **|** You must have one of the following permissions to use this command.\n- `{perms}`",
+        "embedPerms": ":x: **|** I must have the `EMBED_LINKS` permissions to work properly.",
+        "botPerms": ":x: **|** I must have the following permissions to work properly.\n- `{perms}`",
+        "disabled": ":x: **|** This command has temporarly been disabled.",
+        "premiumneed": ":x: **|** This command needs premium!",
+        "error": ":x: **|** Sorry, an internal error occured while attempting to perform this command. Please, try again later.",
+        "start": {
+            "max": "You can only create 4 giveaways at the same time on a guild without premium!",
+            "maxduration": "The giveaway duration can't be higher than {max} days.",
+            "reply": "Let's create a new giveaway on this server!\n\nIn the next steps, you will have to complete some informations about the giveaway to start it. If you want to leave the giveaway creation process, reply to the messages below by saying `cancel`.",
+            "steps": {
+                "one": "**What do you want the winner(s) to won ?** - `1/7`\n\n- *To stop the giveaway creation process, just reply to this message by saying `cancel`.*",
+                "two": "**How many winner(s) do you want ?** - `2/7`\n\n- *To stop the giveaway creation process, just reply to this message by saying `cancel`.*",
+                "three": "**How long do you want the giveaway to be ?** - `3/7`\nEx: 3d\n\n- *To stop the giveaway creation process, just reply to this message by saying `cancel`.*",
+                "four": "**Do you want users to be required to have certain role(s) to participate in the giveaway?** - `4/7`\n\n**YES** - Mention the desired role, and specify roles with `;` if there are multiple roles to have.\n**NO** - Reply `no` to this message.\n\n- *To stop the giveaway creation process, just reply to this message by saying `cancel`.*",
+                "five": "**Do you want users to be required to send a certain number of messages in the desired channel(s) to participate?** - `5/7`\n\n**YES** - Send the channel spaced with the number of messages to be made by `:`, if there are several channels, separate the different channels by `;`.\n➜ Ex: #general : 50 ; #general-2 : 25\n**NO** - Reply `no` to this message.\n\n- *To stop the giveaway creation process, just reply to this message by saying `cancel`.*",
+                "six": "**Do you want some roles to have additional entries ?** - `6/7`\n\n**YES** - Send the role spaced with the number of additional entries to give by `:`, if there are several roles, separate the different roles by `;`.\n➜ Ex: @users : 5 ; @boosters : 15\n**NO** - Reply `no` to this message.\n\n- *To stop the giveaway creation process, just reply to this message by saying `cancel`.*",
+                "seven": "**Finally, in wich channel do you want the giveaway to be launched ?** - `7/7`\n\n- *To stop the giveaway creation process, just reply to this message by saying `cancel`.*",
+                "timeout": "You haven't provided any value on time.",
+                "banner": "Please send the link of the image you wan't to put in the giveaway embed.",
+                "color": "Please send the color you want to put in the giveaway embed in hexadecimal form."
+            },
+            "stopped": "You've successfully stopped the giveaway creation process.",
+            "starting": ":tada: The giveaway will be launched soon!",
+            "started": ":tada: The giveaway has been launched!"
+        },
+        "restart": {
+            "letsgo": "Let's restart this giveaway!",
+            "restarted": "[This giveaway]({link}) has been restarted!"
+        },
+        "reroll": {
+            "notended": "You can only reroll ended giveaways.",
+            "rerolled": "Giveaway has been rerolled!"
+        },
+        "edit": {
+            "letsgo": "Let's edit this giveaway. First of all, here is a summary of the giveaway. If you want to edit something, select it in the select menu. Don't forget to save when you're done!",
+            "selectMenu": {
+                "prize": {
+                    "label": "Prize",
+                    "description": "Edit the prize of the giveaway"
+                },
+                "winners": {
+                    "label": "Winners",
+                    "description": "Change the number of winners."
+                },
+                "duration": {
+                    "label": "Duration",
+                    "description": "Update the duration of the giveaway."
+                },
+                "roles": {
+                    "label": "Roles",
+                    "description": "Set new roles to have. Don't forget to put the roles already configured!"
+                },
+                "messages": {
+                    "label": "Messages",
+                    "description": "Set new messages to send. Don't forget to put the messages already configured!"
+                },
+                "entries": {
+                    "label": "Additionel Entries",
+                    "description": "Set new roles wiht multiple entries. Don't forget to put the roles already configured!"
+                },
+                "banner": {
+                    "label": "Banner",
+                    "description": "Change the image of the giveaway embed."
+                },
+                "color": {
+                    "label": "Color",
+                    "description": "Change the giveaway embed color."
+                },
+                "finish": {
+                    "label": "Finish",
+                    "description": "Stop, save and update all edited values for the giveaway."
+                }
+            }
+        },
+        "delete": "The giveaway has been deleted.",
+        "stats": {
+            "notstatsbot": "You can't see stats from a bot.",
+            "nostats": "No data for this user.",
+            "cleared": "{members}'s stats have been cleared."
+        },
+        "botinfo": {
+            "title": "Bot informations",
+            "description": ":crown: Created by `JustStop__#3916` *(`661525561394462730`)*\n:timer: Launched <t:{ms}:R>\n\n:small_blue_diamond: `{guilds}` guilds\n:four_leaf_clover: on the Shard#**{shard}**.\n\n:gift: `{giveaways}` giveaways\n:timer: with `{running}` running\n:checkered_flag: and `{ended}` ended giveaways."
+        },
+        "clearstats": {
+            "doneall": "The statistics of all members have been cleared.",
+            "nomember": "This member does not exists or is a bot."
+        },
+        "premium": {
+            "title": "Premium informations",
+            "description": "Informations about GWays's premium offer.\n\n・Price: **1€**/month\n\n**Advantages**\n・No giveaways limit (`4` giveaways at the same time without premium)\n・Giveaway duration limit set to 31 days\n・Access to the `restart` command\n・Access to the `set-emoji` command\n\nAll money raised will be reinvested in the bot. To purchase the premium, please visit our [support server](https://discord.gg/qBhyWmWAPn)."
+        },
+        "setemoji": {
+            "running": "You can't change the giveaway reaction emoji while giveaways are running on your server.",
+            "default": "Default emojis cannot be set as reaction for giveaway exept for \\🎉.",
+            "reset": "The emoji reaction for giveaways on this guild have been reset.",
+            "noemote": "This emoji does not exists on this guild.",
+            "done": "The new emoji reaction for giveaways on this guild is {emoji}."
+        },
+        "setup": {
+            "letsgo": "Hey, welcome to the `setup` command. Here you can modify the bot's basics. Here are the different things you can change:\n\n➜ `Lang`: Change the language of the bot on this guild.\n➜ `Bypass Roles`: Change roles that don't need to meet the giveaway conditions.\n➜ `Log Channel` : Change the channel in which giveaway logs will be sent.\n➜ `Manager Roles` : Change roles that are able to manage giveaways.\n➜ `Blacklist` : Change roles that are not able to participate to giveaways.",
+            "rows": {
+                "main": {
+                    "placeholder": "Select an action",
+                    "options": {
+                        "lang": {
+                            "label": "Lang",
+                            "description": "Change the language of the bot on this guild."
+                        },
+                        "bypassroles": {
+                            "label": "Bypass Roles",
+                            "description": "Change roles that don't need to meet the giveaway conditions."
+                        },
+                        "logchannel": {
+                            "label": "Log Channel",
+                            "description": "Change the channel where the giveaway logs will be sent."
+                        },
+                        "manager": {
+                            "label": "Manager Roles",
+                            "description": "Change roles that are able to manage giveaways."
+                        },
+                        "blacklist": {
+                            "label": "Blacklist",
+                            "description": "Change roles that are not able to participate to giveaways."
+                        }
+                    }
+                },
+                "lang": {
+                    "placeholder": "Select a language",
+                    "options": {
+                        "en": {
+                            "label": "English | Anglais",
+                            "description": "Set the bot language on this guild to English."
+                        },
+                        "fr": {
+                            "label": "Français | French",
+                            "description": "Set the bot language on this guild to French."
+                        }
+                    }
+                }
+            },
+            "embed": {
+                "description": "Lang: `{lang}`\nBypass Roles: {bypassroles}\nLog Channel: {logChannel}\nManager Roles: {managerroles}\nBlacklist: {blacklistroles}"
+            },
+            "collector": {
+                "reply": "Let's edit the {value} for this guild!",
+                "chooseLang": "Choose the language you want below!",
+                "msgCollector": {
+                    "bypass": {
+                        "reply": "**Please send below the different roles that will not need to meet the giveaways requirements, spaced by `;` if there are multiple roles.**\n\nReply with `none` to clear the list.\n**WARNING**, modifying this list will remove previous roles that you have not submitted."
+                    },
+                    "log": {
+                        "reply": "Please send below the mention or ID of the salon where you want the giveaways logs to be sent."
+                    },
+                    "manager": {
+                        "reply": "**Please send below the different roles that will be able to manage giveaways, spaced by `;` if there are multiple roles.**\n\nReply with `none` to clear the list.\n**WARNING**, modifying this list will remove previous roles that you have not submitted."
+                    },
+                    "blacklist": {
+                        "reply": "**Please send below the different roles that will not be able to participate to giveaways, spaced by `;` if there are multiple roles.**\n\nReply with `none` to clear the list.\n**WARNING**, modifying this list will remove previous roles that you have not submitted."
+                    }
+                }
+            }
+        },
+        "notagiveawayembed": "This message is not a giveaway embed from the bot.",
+        "ended": "You can't restart a giveaway that is not ended.",
+        "msgdeleted": "The giveaway message has been deleted."
+    },
+    "notanumber": "The provided value is not a number.",
+    "notatextchannel": "The provided value is not a TextChannel",
+    "embeds": {
+        "summary": {
+            "title": "Summary of the giveaway",
+            "description": "Prize: {prize}\nWinner(s): {winner}\nDuration: {duration}\nConditions\n➜ Roles to have: {roles}\n➜ Messages to send:\n{messages}\n\n➜ Additional entries:\n{entries}"
+        },
+        "giveaway": {
+            "running": {
+                "description": "\n<:timer:920371990651605002> Ending: <t:{ms}:R> (<t:{ms2}:F>\n<:winners:920377998039982082> Winner(s): **{winners}**\n<:host:920371989435265074> Hosted by: {host}",
+                "footer": "By reacting to this message you agree to being DMed.",
+                "conditions": {
+                    "title": "\n\n<:requirements:920373902268563456> Requirements:",
+                    "roles": "\n<:white_arrow:920396866175262780> Role(s) to have: {roles}",
+                    "messages": "\n<:white_arrow:920396866175262780> Messages to send:\n{messages}",
+                    "entries": "<:chance:920373830453702666> Additional entries:\n{entries}"
+                }
+            },
+            "ended": {
+                "winners": "<:winners:920377998039982082> Winner(s): {winners}",
+                "author": "<:host:920371989435265074> Hosted by: {author}"
+            }
+        }
+    },
+    "running": ":tada: **GIVEAWAY** :tada:",
+    "ended": ":tada: **GIVEAWAY ENDED** :tada:",
+    "congratsnew": ":tada: Congratulations {winners}, you are the new winner{s} for **{prize}**!",
+    "nowinners": ":tada: Oops, no winners can be determinated for this giveaway :-/",
+    "events": {
+        "reactionAdd": {
+            "error": "Error",
+            "success": "Success",
+            "succesdesc": "You're entry into [this giveaway]({link}) has been approved with {entry} entries! **Good luck**"
+        }
+    },
+    "faster": {
+        "norole": "There is no role with ID `{arg}` in this guild.",
+        "nochannel": "There is no channel with ID `{arg}` in this guild.",
+        "notanumber": "`{arg}` can't be set as a number of messages to send.",
+        "cantcheckroles": "We couldn't check your roles. Try again later.",
+        "conditions": {
+            "musthaverole": "You must have the `{role}` role to enter.",
+            "mustsend": "You must send `{messages}` more messages in {channel} to enter into this giveaway."
+        }
+    },
+    "logs": {
+        "joined": "📥 ➜ The user `{member}` has just entered into the giveaway. {giveawayURL}",
+        "left": "📤 ➜ The user `{member}` has just left the giveaway. {giveawayURL}",
+        "bypass": "⭐ ➜ The user `{member}` has just bypassed the giveaway. {giveawayURL}",
+        "launched": "🎉 ➜ {member} has just launched a giveaway to win: `{prize}` in {channel}. {giveawayURL}",
+        "ended": "🏁 ➜ The giveaway to win `{prize}` in {channel} has just ended. {giveawayURL}",
+        "edited": "🛠️ ➜ The giveaway has just been edited by `{member}`. {giveawayURL}"
+    },
+    "notifs": {
+        "changed": "Your notifications for giveaways are now **{status}** !",
+        "on": "enabled",
+        "off": "disabled",
+        "ended": "🏁 ➜ Your giveaway to win `{prize}` on `{guild}` has just ended. {giveawayURL}",
+        "win": "🎉 ➜ You've just win the giveaway to win `{prize}` on `{guild}` ! {giveawayURL}",
+        "joined": "📥 ➜ Your entry into the giveaway to win `{prize}` on `{guild}` has been accepted. You have **{entries}** entrie{s}. {giveawayURL}",
+        "left": "📤 ➜ You have removed your entry to the giveaway to win `{prize}` on `{guild}`. {giveawayURL}",
+        "denied": "❌ ➜ Your entry in the giveaway to win `{prize}` on `{guild}` has been denied. {err} {giveawayURL}",
+        "blacklist": "📋 ➜ Your entry in the giveaway to win `{prize}` on `{guild}` was denied because you have a role that is not allowed to participate in giveaways. {giveawayURL}"
     }
 }

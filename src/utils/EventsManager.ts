@@ -22,7 +22,7 @@ class EventsManager {
     addEvent(event: DiscordEvent): void {
         this._events.set(event._name.toLowerCase(), event);
         this._client.on(event._name, event.run.bind(event));
-        delete require.cache[require.resolve(this._path + '\\' + event._name)];
+        delete require.cache[require.resolve(this._path + '/' + event._name)];
     }
 
     async loadEvents(): Promise<void> {

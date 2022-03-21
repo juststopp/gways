@@ -1,8 +1,8 @@
 import Client from "../../main";
 import { resolve } from 'path';
-import { Guild, Channel, Role, Collection, Snowflake, GuildMember } from 'discord.js';
-import axios from 'axios';
+import { Guild, Channel, Role, GuildMember } from 'discord.js';
 import { IMessages, MessagesModel } from '../utils/schemas/Messages.model';
+import { IGuild, GuildModel } from '../utils/schemas/Guild.model';
 
 class Faster {
     client: typeof Client;
@@ -23,44 +23,21 @@ class Faster {
         return require(langPath);
     }
 
-    checkLinks(args: Array<string>, allGuilds: Map<string, Guild> | string, need: boolean): Promise<Map<string, Guild> | string> {
-        return new Promise<Map<string, Guild> | string>((resolve, reject) => {
-
-            args.forEach((arg: string, index: number) => {
-                if(arg.toLowerCase() === 'no') resolve('Done!');
-                
-                axios.get('https://discord.com/api/v6/invites/' + arg.trim().split('/')[3], {
-                    headers: {
-                        "User-Agent": "DiscordBot",
-                        "Content-Type": "application/json",
-                        "Authorization": "Bot " + this.client.config.token
-                    }
-                }).then(async(res) => {
-                    // @ts-ignore;
-                    const servers: Collection<Snowflake, Guild> = await this.client.shard.broadcastEval((client: typeof Client, { guildId }) => client.guilds.cache.get(guildId), { context: { guildId: res.data.guild.id } });
-                    if(!servers || !servers.find((s: any) => s?.id === res.data.guild.id)) reject(`I'm not in this guild: ${arg}`);
-
-                    // @ts-ignore;
-                    if(need) allGuilds.set(arg.trim(), servers.find((s: any) => s?.id === res.data.guild.id));
-
-                    if(index === args.length - 1) {
-                        resolve(allGuilds);
-                    }
-                }).catch(err => {
-                    reject(`This link does not exists: ${arg}`);
-                })
-            })
-        })
+    async getGuildConfig(guildId: string) {
+        return await GuildModel.findOne({ id: guildId });
     }
 
-    checkRoles(args: Array<string>, guild: Guild) {
+    async checkRoles(args: Array<string>, guild: Guild) {
+        const guildConfig: IGuild = await this.getGuildConfig(guild.id);
+        const lang: any = this.lang(guildConfig.lang);
         return new Promise((resolve, reject) => {
 
-            args.forEach((arg: string, index: number) => {
+            args.forEach((a: string, index: number) => {
+                const arg: string = a.trim().split(':')[0];
                 if(arg.toLowerCase() === 'no') resolve('Done!');
 
                 const role: Role = guild.roles.cache.find(r => r.id === arg.trim().replace('<', '').replace('@', '').replace('&', '').replace('>', ''))
-                if(!role) reject(`There is no role with ID \`${arg}\` in this guild.`);
+                if(!role) reject(lang.faster.norole.replace('{arg}', arg));
                 
                 if(index === args.length - 1) resolve('Done!');
             })
@@ -68,7 +45,9 @@ class Faster {
         })
     }
 
-    checkChannels(args: Array<string>, guild: Guild) {
+    async checkChannels(args: Array<string>, guild: Guild) {
+        const guildConfig: IGuild = await this.getGuildConfig(guild.id);
+        const lang: any = this.lang(guildConfig.lang);
         return new Promise((resolve, reject) => {
             args.forEach((arg: string, index: number) => {
                 if(arg.toLowerCase() === 'no') resolve('Done!');
@@ -77,60 +56,64 @@ class Faster {
                 const channel: Channel = guild.channels.cache.get(splitted[0].trim().replace('<', '').replace('#', '').replace('>', ''));
                 const messages: number = Number(splitted[1]);
                 
-                if(!channel) reject(`There is no channel with ID \`${splitted[0].trim().replace('<', '').replace('#', '').replace('>', '')}\` in this guild.`);
-                if(!messages) reject(`\`${splitted[1]}\` can't be set has a number of messages to send.`);
+                if(!channel) reject(lang.faster.nochannel.replace('{arg}', splitted[0].trim().replace('<', '').replace('#', '').replace('>', '')));
+                if(!messages) reject(lang.faster.notanumber.replace('{arg}', splitted[1]));
                 
                 if(index === args.length - 1) resolve('Done!');
             })
         })
     }
 
-    checkUserGuilds(guilds: Array<string>, userId: string) {
-        return new Promise((resolve, reject) => {
-            resolve('Done!');
-            /*guilds.forEach((arg: string, index: number) => {
-                if(arg.toLowerCase() === 'no') resolve('Done!')
-                
-                axios.get('https://discord.com/api/v6/invites/' + arg.trim().split('/')[3], {
-                    headers: {
-                        "User-Agent": "DiscordBot",
-                        "Content-Type": "application/json",
-                        "Authorization": "Bot " + this.client.config.token
-                    }
-                }).then(async(res) => {
-                    // @ts-ignore;
-                    const users = await this.client.shard.broadcastEval(async (client: typeof Client, { guildId, userId }) => await client.guilds.cache.get(guildId)?.members.fetch(userId), { context: { guildId: res.data.guild.id, userId: userId } });
-                    // @ts-ignore;
-                    if(!users || !users.find((u: any) => u?.userId == userId)) reject(`You must join [${res.data.guild.name}](${arg}) before entering this giveaway.`);
-                    if(index === guilds.length - 1) {
-                        resolve('Done!');
-                    }
-                }).catch(err => {
-                    resolve('The link does no longer exists.')
-                })
-            })*/
-        })
-    }
-
-    checkUserRoles(roles: Array<string>, userId: string, guildId: string) {
+    async checkUserRoles(roles: Array<string>, userId: string, guildId: string) {
         const guild: Guild = this.client.guilds.cache.get(guildId);
         if(!guild) resolve('Done!');
+
+        const guildConfig: IGuild = await this.getGuildConfig(guild.id);
+        const lang: any = this.lang(guildConfig.lang);
         return new Promise((resolve, reject) => {
             roles.forEach(async(arg: string, index: number) => {
                 if(arg.toLowerCase() === 'no') resolve('Done!');
 
                 const member: GuildMember = await guild.members.fetch(userId);
-                if(!member) reject('We couldn\'t check your roles. Try again later.')
+                if(!member) reject(lang.faster.cantcheckroles)
                 
-                if(!member.roles.cache.has(arg.trim().toLowerCase().replace('<', '').replace('@', '').replace('&', '').replace('>', ''))) reject(`You must have the \`${guild.roles.cache.get(arg.trim().toLowerCase().replace('<', '').replace('@', '').replace('&', '').replace('>', ''))?.name}\` role to enter.`)
+                if(!member.roles.cache.has(arg.trim().toLowerCase().replace('<', '').replace('@', '').replace('&', '').replace('>', ''))) reject(lang.faster.conditions.musthaverole.replace('{role}', guild.roles.cache.get(arg.trim().toLowerCase().replace('<', '').replace('@', '').replace('&', '').replace('>', ''))?.name))
                 if(index === roles.length - 1) resolve('Done!');
             });
         })
     }
 
-    checkUserMessages(messages: Array<string>, userId: string, guildId: string) {
+    async checkBypassUserRoles(roles: Array<string>, userId: string, guildId: string) {
         const guild: Guild = this.client.guilds.cache.get(guildId);
         if(!guild) resolve('Done!');
+
+        const guildConfig: IGuild = await this.getGuildConfig(guild.id);
+        const lang: any = this.lang(guildConfig.lang);
+        let have = 0;
+        return new Promise((resolve, reject) => {
+            if(roles.find(r => r.toLowerCase() == 'none')) return reject('No roles');
+
+            roles.forEach(async(arg: string, index: number) => {
+                if(arg.toLowerCase() === 'no') resolve('Done!');
+
+                const member: GuildMember = await guild.members.fetch(userId);
+                if(!member) reject(lang.faster.cantcheckroles)
+                
+                if(member.roles.cache.has(arg.trim().toLowerCase().replace('<', '').replace('@', '').replace('&', '').replace('>', ''))) have++;
+                if(index === roles.length - 1) {
+                    if(have === 0) reject('No bypassroles.')
+                    else resolve('Bypass role found!')
+                }
+            });
+        })
+    }
+
+    async checkUserMessages(messages: Array<string>, userId: string, guildId: string) {
+        const guild: Guild = this.client.guilds.cache.get(guildId);
+        if(!guild) resolve('Done!');
+
+        const guildConfig: IGuild = await this.getGuildConfig(guild.id);
+        const lang: any = this.lang(guildConfig.lang);
         return new Promise((resolve, reject) => {
             messages.forEach(async(arg: string, index: number) => {
                 if(arg.toLowerCase() === 'no') resolve('Done!');
@@ -140,11 +123,49 @@ class Faster {
                 if(channel) {
                     const datas: IMessages = await MessagesModel.findOne({ id: userId, guild: guild.id, channel: channel.id }).then(c => c || MessagesModel.create({ id: userId, guild: guild.id, channel: channel.id, messages: 0 }));
                     if(datas.messages < Number(splitted[1])) reject(`You must send \`${Number(splitted[1]) - datas.messages}\` more messages in ${channel} to enter into this giveaway.`);
+                    if(datas.messages < Number(splitted[1])) reject(lang.faster.conditions.mustsend.replace('{messages}', Number(splitted[1]) - datas.messages).replace('{channel}', channel));
                 }
 
                 if(index === messages.length - 1) resolve('Done!');
             })
         })
+    }
+
+    getUserEntries(entries: Array<string>, userId: string, guild: Guild): Promise<number> {
+        return new Promise<number>((resolve: Function, reject: Function) => {
+            let entry: number = 1; 
+            entries.forEach(async(arg: string, index: number) => {
+                if(arg.toLowerCase() === 'no') resolve(entry);
+
+                const splitted: Array<string> = arg.trim().split(':');
+
+                const role: Role = guild.roles.cache.get(splitted[0].trim().replace('<', '').replace('@', '').replace('&', '').replace('>', ''));
+                if(!role) return;
+                const roleEntries: number = Number(splitted[1]);
+                if(!roleEntries) return;
+
+                const member: GuildMember = await guild.members.fetch(userId);
+                if(!member) return;
+
+                if(member.roles.cache.has(role.id)) entry+=roleEntries;
+
+                if(index === entries.length - 1) resolve(entry);
+            })
+        })
+    }
+
+    checkChannel(channel: string, guild: Guild): boolean {
+        return guild.channels.cache.some(c => c.id === channel.replace('<', '').replace('#', '').replace('>', ''));
+    }
+
+    checkURL(url: string) {
+        const pattern = new RegExp('^(https?:\\/\\/)?'+
+            '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+
+            '((\\d{1,3}\\.){3}\\d{1,3}))'+
+            '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+
+            '(\\?[;&a-z\\d%_.~+=-]*)?'+
+            '(\\#[-a-z\\d_]*)?$','i');
+        return !!pattern.test(url);
     }
 }
 

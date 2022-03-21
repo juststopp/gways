@@ -14,15 +14,16 @@ class MessageCreate extends DiscordEvent {
 
     async run(message: Message) {
         if(message.author.bot) return;
-        GiveawayModel.find({}).then(giveaways => {
+        GiveawayModel.find({ guild: message.guild.id, ended: false }).then(giveaways => {
             giveaways.forEach(async(giveaway: IGiveaway) => {
-                if(giveaway.ended === true) return;
                 if(message.guild.id !== giveaway.guild) return;
-                if(message.channel.id !== giveaway.channel) return;
-
-                const datas: IMessages = await MessagesModel.findOne({ id: message.author.id, guild: message.guild.id, channel: message.channel.id }).then(c => c || MessagesModel.create({ id: message.author.id, guild: message.guild.id, channel: message.channel.id }));
-                datas.set('messages', datas.messages + 1);
-                datas.save();
+                const messages: Array<string> = giveaway.conditions.get('messages').trim().split(';');
+                messages.forEach(async(msg: string) => {
+                    if(!msg.trim().split(':')[0].includes(message.channel.id)) return;
+                    const datas: IMessages = await MessagesModel.findOne({ id: message.author.id, guild: message.guild.id, channel: message.channel.id }).then(c => c || MessagesModel.create({ id: message.author.id, guild: message.guild.id, channel: message.channel.id }));
+                    datas.set('messages', datas.messages + 1);
+                    datas.save();
+                })
             })
         })
     }

@@ -64,7 +64,7 @@ class CommandManager {
             }
         }
 
-        await this._slashCommands.set(this._commands.map((cmd) => {
+        await this._slashCommands.set(this._commands.filter((cmd: Command) => !cmd.testCmd).map((cmd) => {
             if(cmd.type !== "CHAT_INPUT") return { 
                 name: cmd.name, 
                 type: cmd.type 
@@ -74,9 +74,9 @@ class CommandManager {
                 description: cmd.description,
                 options: cmd.options
             }
-        }), this._client.config.discord.testGuild);
+        }));
 
-        /*await this._slashCommands.set(this._commands.filter(cmd => !cmd.testCmd).map(cmd => {
+        await this._slashCommands.set(this._commands.filter((cmd: Command) => cmd.testCmd).map((cmd) => {
             if(cmd.type !== "CHAT_INPUT") return { 
                 name: cmd.name, 
                 type: cmd.type 
@@ -86,7 +86,7 @@ class CommandManager {
                 description: cmd.description,
                 options: cmd.options
             }
-        }));*/
+        }), '917677144316968960');
 
     }
 }

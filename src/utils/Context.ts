@@ -3,18 +3,19 @@ import { CommandInteraction, CommandInteractionOptionResolver, Guild, ShardClien
     InteractionDeferReplyOptions, WebhookEditMessageOptions, GuildChannel, ContextMenuInteraction
 } from "discord.js";
 import Client from "../../main";
+import { IGuild } from '../utils/schemas/Guild.model'
 
 class Context {
     interaction: CommandInteraction | ContextMenuInteraction;
     client: typeof Client;
     args: CommandInteractionOptionResolver;
     datas: any;
-    lang: JSON;
+    lang: any;
 
-    constructor(client: typeof Client, interaction: CommandInteraction | ContextMenuInteraction, guildDatas: any) {
+    constructor(client: typeof Client, interaction: CommandInteraction | ContextMenuInteraction, guildDatas: IGuild) {
         this.interaction = interaction;
         this.client = client;
-        this.args = interaction.options;
+        this.args = <CommandInteractionOptionResolver>interaction.options;
         this.datas = guildDatas;
         this.lang = this.client.faster.lang(guildDatas.lang);
     }

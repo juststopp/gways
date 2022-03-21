@@ -2,21 +2,22 @@ import Context from '../../utils/Context';
 import Command from '../../utils/Command';
 import { Permissions } from 'discord.js';
 
-class Edit extends Command {
+class Restart extends Command {
     constructor() {
         super({
-            name: "Edit giveaway",
+            name: "Restart giveaway",
             category: "giveaways",
             type: "MESSAGE",
-            description: "Edit a giveaway",
-            userPerms: [Permissions.FLAGS.MANAGE_GUILD]
+            description: "Restart a giveaway",
+            userPerms: [Permissions.FLAGS.MANAGE_GUILD],
+            premium: true
         })
     }
 
     async run(ctx: Context) {
-        const command: Command = ctx.client.commands.findCommand('edit');
+        const command: Command = ctx.client.commands.findCommand('restart');
         await command.run(ctx);
     }
 }
 
-module.exports = new Edit();
+module.exports = new Restart();
