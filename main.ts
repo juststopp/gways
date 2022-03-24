@@ -53,7 +53,7 @@ class Bot extends Client {
 
     async launch() {
         await this.events.loadEvents();
-        await connect('mongodb+srv://juststop:devpassword@cluster0.ho9il.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
+        await connect(this.config.dbURL)
         this.logger.success(`[Events] ${this.events?.events.size} évènements ont été chargés.`);
 
         try { 
